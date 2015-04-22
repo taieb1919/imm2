@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\libs\libs\poi-examples-3.11-20141221.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="eaef3f6d5ef603f8318fffceb514e727669fdd5c">
+        <dex dex="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\pre-dexed\debug\poi-examples-3.11-20141221-630d629aca1f9089a139724eae1d56c206a61fdb.jar" />
+    </item>
+    <item
+        jar="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\libs\libs\poi-excelant-3.11-20141221.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="38c56fc0953832e7498d04a973978c11054f104e">
+        <dex dex="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\pre-dexed\debug\poi-excelant-3.11-20141221-7d9fc248446ace7be16daafcf437327d1cbe7333.jar" />
+    </item>
+    <item
+        jar="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.0.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d84409890828e07d344a3b9b1da545dba9897b51">
+        <dex dex="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\pre-dexed\debug\classes-6126f561103da49ce587347644630121e5f5b661.jar" />
+    </item>
+    <item
+        jar="C:\Users\khaled\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-9ef150fc51653650e306bacea8dc64d2ba478810.jar" />
+    </item>
+    <item
+        jar="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\libs\libs\poi-3.11-20141221.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="51058d9db469437a5ed0aa508e7de8937019e1d9">
+        <dex dex="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\pre-dexed\debug\poi-3.11-20141221-4838bbeed5dae4d20e88c427cd73b9fb7a27040d.jar" />
+    </item>
+    <item
+        jar="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\pre-dexed\debug\classes-20493d0db9f8556009f3e0e797d7f37eb3ff4e6a.jar" />
+    </item>
+    <item
+        jar="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-06f0c78a0fe502baa8fd84f926ba339dda36c49e.jar" />
+    </item>
+    <item
+        jar="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\libs\libs\poi-scratchpad-3.11-20141221.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c5f7987f03d92bb6d01895f043915e897f7bb50a">
+        <dex dex="C:\Users\khaled\AndroidStudioProjects\IMMKD\app\build\intermediates\pre-dexed\debug\poi-scratchpad-3.11-20141221-4eb1b5e58326b714a1c538d65deba64340582990.jar" />
+    </item>
+
+</items>
