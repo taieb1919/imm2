@@ -98,37 +98,51 @@ public class parsingxls {
     {
         final DataFormatter df = new DataFormatter();
         Article article=new Article();
+
         String value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(1)) +
                 df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(2));
         article.setCASE(value);
+
         value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(9));
         article.setPart_Name(value);
+
         value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7));
         article.setPart_Num(value);
+
+
+
         boolean finish=false;
         Station stat=null;
 
-        do{
+        while(!finish){
+            stat=new Station();
             value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(3));
             article.getListe_BOX().add(value);
+
             value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(12)) +" "+
                     df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(13));
-            stat=new Station();
             stat.setStat_Name(value);
+
             value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(14));
             stat.setQTY(value);
+
             article.getListe_Station().add(stat);
             idrow++;
+
             value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7));
+            System.out.println("xxxxxxxxxxx    "+value);
+            System.out.println("yyyyyyyyyyy    "+df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow-1).getCell(7)));
             if(!value.trim().equals(cellContent.trim()))
             {
                 finish=true;
+                break;
+
             }
-            System.out.println(article.toString());
+            //System.out.println(article.toString());
 
 
 
-        }while(!finish);
+        }
 
 
 

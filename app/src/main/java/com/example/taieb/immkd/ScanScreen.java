@@ -7,6 +7,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -164,6 +166,9 @@ if(myView!=null) {
         System.out.println(searchresult);
         Article art= fileparser.getallrows(idmodele, searchresult, ValueToSearch);
 
+        System.out.println(""+art.getListe_Station().size());
+      //  art.CleanBOXList();
+       // art.CleanStationList();
 
         View itemInfo1 = getLayoutInflater().inflate(R.layout.layoutsearchok, rl, true);
 
@@ -178,6 +183,8 @@ if(myView!=null) {
         TextView txtPartName = (TextView) findViewById(R.id.PARTNAMETEXT);
         txtPartName.setText(art.getPart_Name());
         TableLayout TL=(TableLayout)findViewById(R.id.tableresultat);
+
+
         TableRow TRow=null;
         for (int j=0;j<art.getListe_Station().size();j++)
         {
@@ -189,16 +196,32 @@ if(myView!=null) {
             textQTY = new TextView(this);
 
             TRow =new TableRow(this);
-//            TRow = (TableRow) TL.getChildAt(j+2);
+            TRow.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+                    LayoutParams.FILL_PARENT,1f));
+            TRow.setGravity(Gravity.CENTER_HORIZONTAL);
 
-          //  textSTAT=(TextView)TRow.getChildAt(0);
 
-            textSTAT.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-                    LayoutParams.WRAP_CONTENT));
+
+            textSTAT.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+                    LayoutParams.FILL_PARENT, 1f));
             textSTAT.setBackgroundResource(R.drawable.cell_shape);
-            textSTAT.setPadding(2,2,2,2);
+            textSTAT.setPadding(2, 2, 2, 2);
+            textSTAT.setGravity(Gravity.CENTER_HORIZONTAL);
+            textSTAT.setTextColor(Color.WHITE);
+            textSTAT.setTextSize(20);
+            textSTAT.setTypeface(null, Typeface.BOLD);
             textSTAT.setText(art.getListe_Station().get(j).getStat_Name());
 
+
+
+            textQTY.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+                    LayoutParams.FILL_PARENT,1f));
+            textQTY.setBackgroundResource(R.drawable.cell_shape);
+            textQTY.setPadding(2, 2, 2, 2);
+            textQTY.setGravity(Gravity.CENTER_HORIZONTAL);
+            textQTY.setTextColor(Color.WHITE);
+            textQTY.setTextSize(20);
+            textQTY.setTypeface(null, Typeface.BOLD);
             textQTY.setText(art.getListe_Station().get(j).getQTY());
 
 
