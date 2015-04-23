@@ -12,11 +12,14 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellRangeAddress;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -132,7 +135,7 @@ public class parsingxls {
             value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7));
             System.out.println("xxxxxxxxxxx    "+value);
             System.out.println("yyyyyyyyyyy    "+df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow-1).getCell(7)));
-            if(!value.trim().equals(cellContent.trim()))
+            if(!isMergedCell(idsheet,this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7)))
             {
                 finish=true;
                 break;
@@ -149,7 +152,41 @@ public class parsingxls {
         return  article;
 
 
+
     }
+    public  boolean isMergedCell(int sheetID,Cell cell)
+    {
+        List<CellRangeAddress> regionsList = new ArrayList<CellRangeAddress>();
+        Sheet sheet=myWorkBook.getSheetAt(sheetID);
+        boolean ismerged=false;
+        for(int i = 0; i < sheet.getNumMergedRegions(); i++) {
+            regionsList.add(sheet.getMergedRegion(i));
+        }
+
+
+        for(CellRangeAddress region : regionsList) {
+
+            // If the region does contain the cell you have just read from the row
+            if(region.isInRange(cell.getRowIndex(), cell.getColumnIndex())) {
+                // Now, you need to get the cell from the top left hand corner of this
+              //  int rowNum = region.getFirstRow();
+             //   int colIndex = region.getFirstColumn();
+           //     cell = sheet.getRow(rowNum).getCell(colIndex);
+
+                System.out.println("Cel is in merged region. The value stored in that region is " );
+                ismerged=true;
+
+            }
+
+        }
+
+        return  ismerged;
+
+
+    }
+
+
+
     public void readExcelFile(Context context,InputStream myInput) {
 
 
