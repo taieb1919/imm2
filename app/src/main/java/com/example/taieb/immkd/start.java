@@ -24,7 +24,7 @@ public class start extends Activity {
     private int idmodele;
 
 
-    public void startscan(View v) {
+    protected void startscan() {
         Intent myIntent = new Intent(this, ScanScreen.class);
        myIntent.putExtra("id_model", idmodele);
         myIntent.putExtra("searchmode", 1);
@@ -34,7 +34,7 @@ public class start extends Activity {
 
     }
 
-    public void startsearch(View v) {
+    protected void startsearch() {
         Intent myIntent = new Intent(this, ScanScreen.class);
         myIntent.putExtra("id_model", idmodele); //Optional parameters
         myIntent.putExtra("searchmode", 2);
@@ -68,7 +68,7 @@ public class start extends Activity {
         myButton1.setOnClickListener(new View.OnClickListener() {
 
                                         public void onClick(View v) {
-                                            start.this.startscan(v);
+                                            start.this.startscan();
                                         }
 
                                     }
@@ -83,7 +83,7 @@ public class start extends Activity {
         myButton2.setOnClickListener(new View.OnClickListener() {
 
                                          public void onClick(View v) {
-                                             start.this.startsearch(v);
+                                             start.this.startsearch();
                                          }
 
                                      }

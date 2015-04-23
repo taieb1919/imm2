@@ -15,6 +15,28 @@
         android:fillViewport="false"
         android:id="@+id/scrollin">
 
+    </ScrollView>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="81dp"
+        android:weightSum="1"
+        android:layout_weight="0.16">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IMM KD Departement"
+            android:id="@+id/textView6"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.66"
+            android:textColor="#fffafafa"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:gravity="center_vertical|center_horizontal" />
+    </LinearLayout>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
@@ -22,22 +44,7 @@
         android:id="@+id/buttoncontainer">
 
 
-        <Button
-            android:id="@+id/scanner"
-            android:layout_width="133dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:onClick="scanQR"
-            android:text="QR Code"
-            android:textSize="18dp"
-            android:textColor="#ff0074ff"
-            android:background="#fffff700"
-            android:layout_gravity="center_horizontal">
-        </Button>
     </LinearLayout>
-    </ScrollView>
-
 
 
 </LinearLayout>

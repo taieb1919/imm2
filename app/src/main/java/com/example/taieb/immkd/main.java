@@ -34,34 +34,28 @@ public class main extends Activity {
         parsingxls fileparser = new parsingxls();
         InputStream myInput=getResources().openRawResource(R.raw.a);
         fileparser.readExcelFile(this, myInput);
-
-
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.main);
 
-
-
+        /*
+        *
+        *           boucle FOR creation des
+        *           boutons de chaque modele
+        *
+        *
+        * */
         for (  int i= 0; i < fileparser.getALLSHEET().size(); i++) {
-
             String modele_name= fileparser.getALLSHEET().get(i).getName();
-
-
             final Button myButton = new Button(this);
             myButton.setText(modele_name);
             myButton.setId(i);
             myButton.setGravity(Gravity.CENTER);
-          // myButton.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f ));
-
-
             myButton.setPadding(0,8,0,8);
-
             LinearLayout ll = (LinearLayout) findViewById(R.id.buttoncontainer);
-            //   LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
             ll.addView(myButton);
-          //  final String b=""+i;
             myButton.setOnClickListener(new OnClickListener() {
 
                                             public void onClick(View v) {
@@ -69,10 +63,14 @@ public class main extends Activity {
                                             }
 
                                         }
-
-
             );
         }
+        /*
+        *
+        *               END FOR LOOP
+        *
+        *
+        * */
     }
 
 
@@ -80,23 +78,12 @@ public class main extends Activity {
         Intent myIntent = new Intent(this, start.class);
         myIntent.putExtra("id_model", id); //Optional parameters
         myIntent.putExtra("model_name", modelename);
-
         this.startActivity(myIntent);
-
-
-
 }
 
     public void scanQR(View v) {
 
-  /*
-        protected void onCreate(Bundle savedInstanceState) {
-Intent intent = getIntent();
-String value = intent.getStringExtra("key"); //if it's a string you stored.
-*/
-
-
-    }
+     }
 
 
 }

@@ -46,7 +46,7 @@ import static android.widget.Toast.makeText;
  */
 public class ScanScreen extends Activity {
 
-    static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+    private static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
 
 
 
@@ -54,12 +54,12 @@ public class ScanScreen extends Activity {
     private static final int QR_SEARCH = 1;
     private static final int PART_NUM_SEARCH = 2;
     private int SearchMode=-1;
-    parsingxls fileparser;
+    private parsingxls fileparser;
 
 
     //QRCODE search
 
-    public void scanQR() {
+    private void scanQR() {
 
                 try {
 
@@ -72,6 +72,140 @@ public class ScanScreen extends Activity {
         }
 
     }
+/*
+*                                          BLOC SEARCH BY QRCODE
+*
+*
+* */
+            private void sEARCHQRCode(String contents)  {
+                final ProgressDialog dialog =ProgressDialog.show(this, "Searching", "Please wait...", true);
+                new Thread()
+                {
+                    public void run()
+                    {
+                        try
+                        { sleep(4000);
+                        }
+                        catch (Exception e)
+                        {
+                        }
+                        dialog.dismiss();
+                    }
+                }.start();
+
+                LinearLayout rl =(LinearLayout) this.findViewById(R.id.resultview);
+                int searchresult=-1;
+                int sUbstructindice=12;
+                String ValueToSearch ="";
+
+
+
+                View myView = findViewById(R.id.containersearch);
+                if(myView!=null) {
+                    ViewGroup parent = (ViewGroup) myView.getParent();
+                    parent.removeView(myView);
+                }
+
+                do {
+                    ValueToSearch = contents.substring(0,sUbstructindice);
+                    searchresult=fileparser.findRow(this.idmodele,ValueToSearch);
+                    sUbstructindice--;
+
+                }while(sUbstructindice>6 && searchresult<1);
+
+                if(searchresult<1) {
+                    View itemInfo1 = getLayoutInflater().inflate(R.layout.layooutnotfound, rl, true);
+           //         TextView txtsearch = (TextView) findViewById(R.id.textToSearch);
+           //         txtsearch.setText("Search result for : "+ValueToSearch);
+                }else {
+
+                    Article art= fileparser.getallrows(idmodele, searchresult, ValueToSearch);
+
+                    View itemInfo1 = getLayoutInflater().inflate(R.layout.layoutsearchok, rl, true);
+
+              //      TextView txtsearch = (TextView) findViewById(R.id.textToSearch);
+              //      txtsearch.setText("Search result for : "+ValueToSearch);
+                    TextView txtcase = (TextView) findViewById(R.id.CASETEXT);
+                    txtcase.setText(art.getCASE());
+
+                    TextView txtbox = (TextView) findViewById(R.id.BOXTEXT);
+                    txtbox.setText(art.getListe_BOX().get(0));
+
+                    TextView txtPartName = (TextView) findViewById(R.id.PARTNAMETEXT);
+                    txtPartName.setText(art.getPart_Name());
+                    TableLayout TL=(TableLayout)findViewById(R.id.tableresultat);
+                    TableRow TRow=null;
+        /*
+        *                   LOOP FOR :Creation contenu TableLayout
+        * */
+                    for (int j=0;j<art.getListe_Station().size();j++)
+                    {
+
+                        TextView textSTAT;
+                        textSTAT = new TextView(this);
+
+                        TextView textQTY;
+                        textQTY = new TextView(this);
+
+                        TRow =new TableRow(this);
+                        TRow.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+                                LayoutParams.FILL_PARENT,1f));
+                        TRow.setGravity(Gravity.CENTER_HORIZONTAL);
+
+                        textSTAT.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+                                LayoutParams.FILL_PARENT, 1f));
+                        textSTAT.setBackgroundResource(R.drawable.cell_shape);
+                        textSTAT.setPadding(2, 2, 2, 2);
+                        textSTAT.setGravity(Gravity.CENTER_HORIZONTAL);
+                        textSTAT.setTextColor(Color.WHITE);
+                        textSTAT.setTextSize(20);
+                        textSTAT.setTypeface(null, Typeface.BOLD);
+                        textSTAT.setText(art.getListe_Station().get(j).getStat_Name());
+
+
+
+                        textQTY.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+                                LayoutParams.FILL_PARENT,1f));
+                        textQTY.setBackgroundResource(R.drawable.cell_shape);
+                        textQTY.setPadding(2, 2, 2, 2);
+                        textQTY.setGravity(Gravity.CENTER_HORIZONTAL);
+                        textQTY.setTextColor(Color.WHITE);
+                        textQTY.setTextSize(20);
+                        textQTY.setTypeface(null, Typeface.BOLD);
+                        textQTY.setText(art.getListe_Station().get(j).getQTY());
+
+
+                        TRow.addView(textSTAT);
+
+                        TRow.addView(textQTY);
+
+                        TL.addView(TRow,new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
+                    }
+        /*                              END
+        *                   LOOP FOR :Creation contenu TableLayout
+        * */
+
+                }
+
+            }
+
+    /*
+*                                          END
+*                                   BLOC SEARCH BY QRCODE
+*
+* */
+
+
+
+
+
+
+/*
+*                                          BLOC AUTOMATIC QRCODE READER(ZXING)
+*
+*
+* */
+
     private static AlertDialog showDialog(final Activity act, CharSequence title, CharSequence message, CharSequence buttonYes, CharSequence buttonNo) {
         AlertDialog.Builder downloadDialog = new AlertDialog.Builder(act);
         downloadDialog.setTitle(title);
@@ -100,13 +234,20 @@ public class ScanScreen extends Activity {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 String contents = intent.getStringExtra("SCAN_RESULT");
-                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-                // Handle successful scan
+     //           String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 
+
+                sEARCHQRCode(contents);
+
+
+
+
+                // Handle successful scan
+/*
                 Toast toast = makeText(this, "Content:" + contents + " Format:" + format, LENGTH_LONG);
                 toast.setGravity(Gravity.TOP, 25, 400);
                 toast.show();
-            } else if (resultCode == RESULT_CANCELED) {
+     */       } else if (resultCode == RESULT_CANCELED) {
                 // Handle cancel
                 Toast toast = makeText(this, "Scan was Cancelled!", LENGTH_LONG);
                 toast.setGravity(Gravity.TOP, 25, 400);
@@ -116,10 +257,23 @@ public class ScanScreen extends Activity {
         }
     }
 
+/*
+*                                                   END
+*                                    BLOC AUTOMATIC QRCODE READER(ZXING)
+*
+* */
 
-// simple Search
+
+
+
+    /*
+    *
+    *
+    *                               SEARCH BY PARTNUM ENTERED IN EDITTEXT
+    *
+    *
+    * */
 public void simplesearch(View v) {
-
 
     final ProgressDialog dialog =ProgressDialog.show(this, "Searching", "Please wait...", true);
     new Thread()
@@ -131,11 +285,11 @@ public void simplesearch(View v) {
             }
             catch (Exception e)
             {
-//                Log.d("PRUEBA", e.getMessage());
             }
             dialog.dismiss();
         }
     }.start();
+
     LinearLayout rl =(LinearLayout) this.findViewById(R.id.resultview);
 
     EditText mEdit = (EditText) findViewById(R.id.editText);
@@ -147,8 +301,6 @@ public void simplesearch(View v) {
     imm.hideSoftInputFromWindow(mEdit.getWindowToken(), 0);
 
     int searchresult=fileparser.findRow(this.idmodele,ValueToSearch);
-
-
 
 
     View myView = findViewById(R.id.containersearch);
@@ -166,10 +318,6 @@ if(myView!=null) {
 
         Article art= fileparser.getallrows(idmodele, searchresult, ValueToSearch);
 
-
-      //  art.CleanBOXList();
-       // art.CleanStationList();
-
         View itemInfo1 = getLayoutInflater().inflate(R.layout.layoutsearchok, rl, true);
 
         TextView txtsearch = (TextView) findViewById(R.id.textToSearch);
@@ -183,9 +331,10 @@ if(myView!=null) {
         TextView txtPartName = (TextView) findViewById(R.id.PARTNAMETEXT);
         txtPartName.setText(art.getPart_Name());
         TableLayout TL=(TableLayout)findViewById(R.id.tableresultat);
-
-
         TableRow TRow=null;
+        /*
+        *                   LOOP FOR :Creation contenu TableLayout
+        * */
         for (int j=0;j<art.getListe_Station().size();j++)
         {
 
@@ -199,8 +348,6 @@ if(myView!=null) {
             TRow.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
                     LayoutParams.FILL_PARENT,1f));
             TRow.setGravity(Gravity.CENTER_HORIZONTAL);
-
-
 
             textSTAT.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
                     LayoutParams.FILL_PARENT, 1f));
@@ -231,9 +378,24 @@ if(myView!=null) {
 
             TL.addView(TRow,new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
         }
+        /*                              END
+        *                   LOOP FOR :Creation contenu TableLayout
+        * */
 
     }
 }
+/*
+*
+*                                         END
+*                               SEARCH BY PARTNUM ENTERED IN EDITTEXT
+*
+*
+*
+*
+* */
+
+
+
 
 
 
@@ -283,198 +445,6 @@ if(myView!=null) {
            //simplesearch();
         }
     }
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////                                /////////////////////////////////////////////
-//////////////////////         FOR AYMEN              /////////////////////////////////////////////
-//////////////////////                                /////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-/*
-    public void foraymen(View v)
-    {
-        parsingxls fileA;
-        parsingxls fileB;
-
-        HSSFFont font ;//= myWorkBook.createFont();
-
-        boolean trouve=false;
-        final DataFormatter df = new DataFormatter();
-
-        fileA = new parsingxls();
-        InputStream myInput=getResources().openRawResource(R.raw.original);
-
-        fileA.readExcelFile(this, myInput);
-        HSSFSheet s1 = fileA.getMyWorkBook().getSheet("a");
-        HSSFCellStyle cellStyleRED = fileA.getMyWorkBook().createCellStyle();
-        HSSFCellStyle cellStyleGREEN = fileA.getMyWorkBook().createCellStyle();
-
-        cellStyleRED.setFillBackgroundColor(HSSFColor.RED.index);
-        cellStyleRED.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        cellStyleGREEN.setFillBackgroundColor(HSSFColor.GREEN.index);
-        cellStyleGREEN.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        fileB = new parsingxls();
-        InputStream myInput2=getResources().openRawResource(R.raw.finalll);
-        fileB.readExcelFile(this, myInput2);
-        HSSFSheet s2 = fileB.getMyWorkBook().getSheet("a");
-        HSSFCellStyle cellStyleGREEN2 = fileB.getMyWorkBook().createCellStyle();
-        cellStyleGREEN2.setFillBackgroundColor(HSSFColor.GREEN.index);
-        cellStyleGREEN2.setFillPattern(CellStyle.SOLID_FOREGROUND);
-
-        for (int i = 0; i < s1.getPhysicalNumberOfRows(); i++) {
-            Row row = s1.getRow(i);
-
-            if (row!=null){
-                Cell c1=row.getCell(5);
-                String valueTocompare = df.formatCellValue(c1);
-
-                trouve=false;
-                for(int j=0;j<s2.getPhysicalNumberOfRows();j++)
-                {
-                    Row row2 = s2.getRow(j);
-                    if (row!=null){
-                        Cell c2=row2.getCell(5);
-                        String value2 = df.formatCellValue(c2);
-                        if(value2.trim().equals(valueTocompare.trim()))
-                        {
-                            trouve=true;
-                            c1.setCellStyle(cellStyleGREEN);
-                            c2.setCellStyle(cellStyleGREEN2);
-                            for (int k=0;k<11;k++)
-                            {
-                                String val1 =df.formatCellValue(row.getCell(k));
-                                String val2 =df.formatCellValue(row2.getCell(k));
-                                if(val1.equals(val2))
-                                {
-                                    row.getCell(k).setCellStyle(cellStyleGREEN);
-                                    row2.getCell(k).setCellStyle(cellStyleGREEN2);
-                                }
-                            }
-
-                        }
-
-                }
-
-            }
-
-
-    }
-
-
-
-
-
-}
-
-
-        fileA.saveExcelFile(this,"original.xls");
-        fileB.saveExcelFile(this,"original2222222222222.xls");
-
-    }
-
-
-*/
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////            END                 /////////////////////////////////////////////
-//////////////////////         FOR AYMEN              /////////////////////////////////////////////
-//////////////////////                                /////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////                                /////////////////////////////////////////////
-//////////////////////         FOR RH                 /////////////////////////////////////////////
-//////////////////////                                /////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-  /*  public void forRH(View v) throws ParseException {
-        final DataFormatter df = new DataFormatter();
-        SimpleDateFormat Datedf = new SimpleDateFormat("HH:mm");
-
-        List<Date> listdate=new LinkedList<Date>();
-
-        parsingxls fileA = new parsingxls();
-        InputStream myInput=getResources().openRawResource(R.raw.b);
-
-        fileA.readExcelFile(this, myInput);
-        HSSFSheet s1 = fileA.getMyWorkBook().getSheet("a");
-
-        for (int i = 1; i < s1.getPhysicalNumberOfRows(); i++) {
-            Row row = s1.getRow(i);
-            listdate.clear();
-            Date d=new Date();
-
-            if (row!=null) {
-                Cell c1 = row.getCell(5);
-                String valueToread = df.formatCellValue(c1);
-
-                valueToread += " ";
-
-                if(valueToread.length()>2)
-                {
-                for (int k = 0; k < valueToread.length(); k += 6) {
-                    String valueToConvert = "";
-                    valueToConvert = valueToread.substring(k, k + 5);
-                    d=Datedf.parse(valueToConvert);
-                    listdate.add(d);
-
-
-                }
-
-                    row.createCell(6);
-                    row.getCell(6).setCellValue(CalculHour(listdate));
-
-            }
-            }
-        }
-        fileA.saveExcelFile(this,"original.xls");
-}
-
-
-private String CalculHour(List<Date> listedate)
-{
-    if(listedate.size()==4)
-    {
-         long v= getDateDiff(listedate.get(0),listedate.get(1),TimeUnit.HOURS)+getDateDiff(listedate.get(2),listedate.get(3),TimeUnit.HOURS);
-              v=v/1000;
-
-        int hours = (int)v / 60; //since both are ints, you get an int
-        int minutes =(int) v % 60;
-        return hours+":"+minutes +"H" ;
-    }
-    if(listedate.size()==2)
-    {
-        long v= getDateDiff(listedate.get(0),listedate.get(1),TimeUnit.HOURS);
-        v=v/1000;
-
-        int hours = (int)v / 60; //since both are ints, you get an int
-        int minutes =(int) v % 60;
-        return hours+":"+minutes +"H" ;
-    }
-
-
-    return "0";
-}
-    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
-        long diffInMillies = date2.getTime() - date1.getTime();
-        return timeUnit.convert(diffInMillies,TimeUnit.MINUTES);
-    }
-
-*/
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////          END                   /////////////////////////////////////////////
-//////////////////////         FOR RH                 /////////////////////////////////////////////
-//////////////////////                                /////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
 
 
 
