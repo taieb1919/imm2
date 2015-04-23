@@ -83,7 +83,7 @@ public class ScanScreen extends Activity {
                 try {
                     act.startActivity(intent);
                 } catch (ActivityNotFoundException anfe) {
-                    System.out.println(anfe.toString());
+
                 }
             }
         });
@@ -102,7 +102,7 @@ public class ScanScreen extends Activity {
                 String contents = intent.getStringExtra("SCAN_RESULT");
                 String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                 // Handle successful scan
-                System.out.println("hhhh " + contents);
+
                 Toast toast = makeText(this, "Content:" + contents + " Format:" + format, LENGTH_LONG);
                 toast.setGravity(Gravity.TOP, 25, 400);
                 toast.show();
@@ -139,7 +139,7 @@ public void simplesearch(View v) {
     LinearLayout rl =(LinearLayout) this.findViewById(R.id.resultview);
 
     EditText mEdit = (EditText) findViewById(R.id.editText);
-    //System.out.println(mEdit.getText().toString());
+
     String ValueToSearch= mEdit.getText().toString().trim();
 
     InputMethodManager imm = (InputMethodManager)getSystemService(
@@ -163,10 +163,10 @@ if(myView!=null) {
         TextView txtsearch = (TextView) findViewById(R.id.textToSearch);
         txtsearch.setText("Search result for : "+ValueToSearch);
     }else {
-        System.out.println(searchresult);
+
         Article art= fileparser.getallrows(idmodele, searchresult, ValueToSearch);
 
-        System.out.println(""+art.getListe_Station().size());
+
       //  art.CleanBOXList();
        // art.CleanStationList();
 
@@ -330,7 +330,7 @@ if(myView!=null) {
             if (row!=null){
                 Cell c1=row.getCell(5);
                 String valueTocompare = df.formatCellValue(c1);
-                System.out.println("valueTocompare    "+valueTocompare);
+
                 trouve=false;
                 for(int j=0;j<s2.getPhysicalNumberOfRows();j++)
                 {
@@ -412,20 +412,15 @@ if(myView!=null) {
 
             if (row!=null) {
                 Cell c1 = row.getCell(5);
-                //System.out.println("Matricule "+df.formatCellValue(row.getCell(0)));
                 String valueToread = df.formatCellValue(c1);
-               // System.out.println("valueToread:   " + valueToread);
-                //System.out.println("longeur:  " + valueToread.length());
 
                 valueToread += " ";
-                //System.out.println("longeur2:  " + valueToread.length());
 
                 if(valueToread.length()>2)
                 {
                 for (int k = 0; k < valueToread.length(); k += 6) {
                     String valueToConvert = "";
                     valueToConvert = valueToread.substring(k, k + 5);
-               //     System.out.println(valueToConvert);
                     d=Datedf.parse(valueToConvert);
                     listdate.add(d);
 

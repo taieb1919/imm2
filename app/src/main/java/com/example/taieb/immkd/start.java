@@ -30,7 +30,7 @@ public class start extends Activity {
         myIntent.putExtra("searchmode", 1);
         //Optional parameters
         this.startActivity(myIntent);
-       // System.out.println(""+id);
+
 
     }
 
@@ -39,7 +39,7 @@ public class start extends Activity {
         myIntent.putExtra("id_model", idmodele); //Optional parameters
         myIntent.putExtra("searchmode", 2);
         this.startActivity(myIntent);
-        // System.out.println(""+id);
+
 
     }
 

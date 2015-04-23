@@ -134,26 +134,16 @@ public class parsingxls {
             idrow++;
 
             value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7));
-            System.out.println("xxxxxxxxxxx    "+value);
-            System.out.println("yyyyyyyyyyy    "+df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow-1).getCell(7)));
+
             if(!isMergedCell(idsheet,this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7),CC1))
             {
                 finish=true;
                 break;
 
             }
-            //System.out.println(article.toString());
-
-
 
         }
-
-
-
         return  article;
-
-
-
     }
     public  boolean isMergedCell(int sheetID,Cell cell,Cell cc1)
     {
@@ -175,7 +165,6 @@ public class parsingxls {
                 int colIndex = region.getFirstColumn();
                 Cell cell2 = sheet.getRow(rowNum).getCell(colIndex);
                 String vAluecell=df.formatCellValue(cell2);
-                System.out.println("Cel is in merged region. The value stored in that region is " );
                 if(cc1.equals(cell2)) {
                     ismerged = true;
                 }
@@ -240,7 +229,7 @@ public class parsingxls {
 
         // check if available and not read only
         if (!isExternalStorageAvailable() || isExternalStorageReadOnly()) {
-            System.out.println("FileUtils"+ "Storage not available or read only");
+
             return false;
         }
 

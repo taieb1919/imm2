@@ -82,7 +82,7 @@ public class main extends Activity {
         myIntent.putExtra("model_name", modelename);
 
         this.startActivity(myIntent);
-        System.out.println(""+id);
+
 
 
 }
