@@ -113,6 +113,7 @@ public class parsingxls {
         article.setPart_Num(value);
 
 
+        Cell CC1=this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7);
 
         boolean finish=false;
         Station stat=null;
@@ -135,7 +136,7 @@ public class parsingxls {
             value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7));
             System.out.println("xxxxxxxxxxx    "+value);
             System.out.println("yyyyyyyyyyy    "+df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow-1).getCell(7)));
-            if(!isMergedCell(idsheet,this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7),value))
+            if(!isMergedCell(idsheet,this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7),CC1))
             {
                 finish=true;
                 break;
@@ -154,7 +155,7 @@ public class parsingxls {
 
 
     }
-    public  boolean isMergedCell(int sheetID,Cell cell,String value)
+    public  boolean isMergedCell(int sheetID,Cell cell,Cell cc1)
     {
         final DataFormatter df = new DataFormatter();
         List<CellRangeAddress> regionsList = new ArrayList<CellRangeAddress>();
@@ -175,9 +176,10 @@ public class parsingxls {
                 Cell cell2 = sheet.getRow(rowNum).getCell(colIndex);
                 String vAluecell=df.formatCellValue(cell2);
                 System.out.println("Cel is in merged region. The value stored in that region is " );
-                if(value.equals(vAluecell) && vAluecell.trim().length()>0) {
+                if(cc1.equals(cell2)) {
                     ismerged = true;
                 }
+
 
             }
 
