@@ -135,7 +135,7 @@ public class parsingxls {
             value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7));
             System.out.println("xxxxxxxxxxx    "+value);
             System.out.println("yyyyyyyyyyy    "+df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow-1).getCell(7)));
-            if(!isMergedCell(idsheet,this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7)))
+            if(!isMergedCell(idsheet,this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7),value))
             {
                 finish=true;
                 break;
@@ -154,8 +154,9 @@ public class parsingxls {
 
 
     }
-    public  boolean isMergedCell(int sheetID,Cell cell)
+    public  boolean isMergedCell(int sheetID,Cell cell,String value)
     {
+        final DataFormatter df = new DataFormatter();
         List<CellRangeAddress> regionsList = new ArrayList<CellRangeAddress>();
         Sheet sheet=myWorkBook.getSheetAt(sheetID);
         boolean ismerged=false;
@@ -167,14 +168,16 @@ public class parsingxls {
         for(CellRangeAddress region : regionsList) {
 
             // If the region does contain the cell you have just read from the row
-            if(region.isInRange(cell.getRowIndex(), cell.getColumnIndex())) {
+            if(region.isInRange(cell.getRowIndex(), cell.getColumnIndex())  ) {
                 // Now, you need to get the cell from the top left hand corner of this
-              //  int rowNum = region.getFirstRow();
-             //   int colIndex = region.getFirstColumn();
-           //     cell = sheet.getRow(rowNum).getCell(colIndex);
-
+                int rowNum = region.getFirstRow();
+                int colIndex = region.getFirstColumn();
+                Cell cell2 = sheet.getRow(rowNum).getCell(colIndex);
+                String vAluecell=df.formatCellValue(cell2);
                 System.out.println("Cel is in merged region. The value stored in that region is " );
-                ismerged=true;
+                if(value.equals(vAluecell) && vAluecell.trim().length()>0) {
+                    ismerged = true;
+                }
 
             }
 
