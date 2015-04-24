@@ -78,8 +78,8 @@ public class ScanScreen extends Activity {
 *
 * */
             private void sEARCHQRCode(String contents)  {
-                final ProgressDialog dialog =ProgressDialog.show(this, "Searching", "Please wait...", true);
-                new Thread()
+     //           final ProgressDialog dialog =ProgressDialog.show(this, "Searching", "Please wait...", true);
+     /*           new Thread()
                 {
                     public void run()
                     {
@@ -92,7 +92,7 @@ public class ScanScreen extends Activity {
                         dialog.dismiss();
                     }
                 }.start();
-
+*/
                 LinearLayout rl =(LinearLayout) this.findViewById(R.id.resultview);
                 int searchresult=-1;
                 int sUbstructindice=12;
@@ -111,7 +111,7 @@ public class ScanScreen extends Activity {
                     searchresult=fileparser.findRow(this.idmodele,ValueToSearch);
                     sUbstructindice--;
 
-                }while(sUbstructindice>6 && searchresult<1);
+                }while(sUbstructindice>6 && searchresult<1 && contents.length()>5);
 
                 if(searchresult<1) {
                     View itemInfo1 = getLayoutInflater().inflate(R.layout.layooutnotfound, rl, true);
@@ -237,17 +237,17 @@ public class ScanScreen extends Activity {
      //           String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
 
 
+                // Handle successful scan
+
+                Toast toast = makeText(this, "Searching:" , LENGTH_LONG);
+                toast.setGravity(Gravity.TOP, 25, 400);
+                toast.show();
+
                 sEARCHQRCode(contents);
 
 
 
-
-                // Handle successful scan
-/*
-                Toast toast = makeText(this, "Content:" + contents + " Format:" + format, LENGTH_LONG);
-                toast.setGravity(Gravity.TOP, 25, 400);
-                toast.show();
-     */       } else if (resultCode == RESULT_CANCELED) {
+     } else if (resultCode == RESULT_CANCELED) {
                 // Handle cancel
                 Toast toast = makeText(this, "Scan was Cancelled!", LENGTH_LONG);
                 toast.setGravity(Gravity.TOP, 25, 400);
