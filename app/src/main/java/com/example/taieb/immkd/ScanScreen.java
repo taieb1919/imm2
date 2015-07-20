@@ -119,7 +119,7 @@ public class ScanScreen extends Activity {
            //         txtsearch.setText("Search result for : "+ValueToSearch);
                 }else {
 
-                    Article art= fileparser.getallrows(idmodele, searchresult, ValueToSearch);
+                    Article art= fileparser.getallrows(idmodele, searchresult);
 
                     View itemInfo1 = getLayoutInflater().inflate(R.layout.layoutsearchok, rl, true);
 
@@ -316,7 +316,7 @@ if(myView!=null) {
         txtsearch.setText("Search result for : "+ValueToSearch);
     }else {
 
-        Article art= fileparser.getallrows(idmodele, searchresult, ValueToSearch);
+        Article art= fileparser.getallrows(idmodele, searchresult);
 
         View itemInfo1 = getLayoutInflater().inflate(R.layout.layoutsearchok, rl, true);
 

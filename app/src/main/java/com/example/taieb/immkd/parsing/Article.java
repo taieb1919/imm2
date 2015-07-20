@@ -8,13 +8,22 @@ public class Article {
     private String Part_Num;
     private String Part_Name;
     private String CASE;
-    private List<String> liste_BOX;
+    private String BOX;
+   // private List<String> liste_BOX;
     private List<Station> liste_Station;
 
 
     public Article() {
-        liste_BOX=new LinkedList<String>();
+
         liste_Station=new LinkedList<Station>();
+    }
+
+    public String getBOX() {
+        return BOX;
+    }
+
+    public void setBOX(String BOX) {
+        this.BOX = BOX;
     }
 
     public String getPart_Num() {
@@ -41,13 +50,7 @@ public class Article {
         this.CASE = CASE;
     }
 
-    public List<String> getListe_BOX() {
-        return liste_BOX;
-    }
 
-    public void setListe_BOX(List<String> liste_BOX) {
-        this.liste_BOX = liste_BOX;
-    }
 
     public List<Station> getListe_Station() {
         return liste_Station;
@@ -80,34 +83,7 @@ public class Article {
         }
     }
 
-    public void CleanBOXList()
-    {
-        if(liste_BOX.size()>1)
-        {
-            String s=liste_BOX.get(0);
-            boolean differant=false;
 
-            for(int i=0;i<liste_BOX.size();i++)
-            {
-                if(!liste_BOX.get(i).equals(s))
-                    differant=true;
-                break;
-
-            }
-
-            if(!differant)
-            {
-                String lastS=liste_BOX.get(liste_BOX.size()-1);
-                liste_BOX.clear();
-                if(s.equals(lastS)) {
-                    liste_BOX.add(s);
-                }else
-                {
-                    liste_BOX.add(s+"-"+lastS);
-                }
-            }
-        }
-    }
 
     @Override
     public String toString() {
@@ -115,7 +91,7 @@ public class Article {
                 "Part_Num='" + Part_Num + '\'' +
                 ", Part_Name='" + Part_Name + '\'' +
                 ", CASE='" + CASE + '\'' +
-                ", liste_BOX=" + liste_BOX.get(0) +
+             //   ", liste_BOX=" + liste_BOX.get(0) +
                 ", liste_Station=" + liste_Station.get(0).getStat_Name() +
                 '}';
     }

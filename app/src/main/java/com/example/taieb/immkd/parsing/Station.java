@@ -5,14 +5,24 @@ package com.example.taieb.immkd.parsing;
  */
 public class Station {
     private String Stat_Name;
+    private String Stat_Num;
     private String QTY;
 
     public Station() {
     }
 
-    public Station(String stat_Name, String QTY) {
+    public Station(String stat_Name, String QTY,String Stat_Num) {
         Stat_Name = stat_Name;
         this.QTY = QTY;
+        this.Stat_Num=Stat_Num;
+    }
+
+    public String getStat_Num() {
+        return Stat_Num;
+    }
+
+    public void setStat_Num(String stat_Num) {
+        Stat_Num = stat_Num;
     }
 
     public String getStat_Name() {

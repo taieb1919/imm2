@@ -23,11 +23,16 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Created by KHALED on 09/04/2015.
- */
+
 
 public class parsingxls {
+    protected   static int pPARTNUMBER_COLOMN=2;
+    protected static int pPARTNAME_COLOMN=3;
+    protected static int pBOX_COLOMN=1;
+    protected static int pCASE_COLOMN=0;
+    protected static int pSTATION_NAME_COLOMN=4;
+    protected static int pSTATION_NUMBER_COLOMN=5;
+    protected static int pSTATION_QTY_COLOMN=6;
 
     private HSSFWorkbook myWorkBook;
 
@@ -46,10 +51,11 @@ public class parsingxls {
     public List<sheet> getALLSHEET()
     {
         List<sheet> sheets = new LinkedList<sheet>();
-        sheet s=null;
+        sheet s;
 
 
-       for(int i=0;i< myWorkBook.getNumberOfSheets();i++)
+
+        for(int i=0;i< myWorkBook.getNumberOfSheets();i++)
        {
            s=new sheet();
 
@@ -73,13 +79,16 @@ public class parsingxls {
        final DataFormatter df = new DataFormatter();
        HSSFSheet s = myWorkBook.getSheetAt(id);
 
+
+
+
        for (int i = 0; i < s.getPhysicalNumberOfRows(); i++) {
            Row row = s.getRow(i);
 
            if (row!=null)
            {
-           for (int j = 0; j <15; j++) {
-               Cell cl = row.getCell(j);
+
+               Cell cl = row.getCell(7);
    //            cl.getCellStyle().setFillBackgroundColor(IndexedColors.RED.getIndex());
                if (cl != null) {
                    String valueAsString = df.formatCellValue(cl);
@@ -88,7 +97,7 @@ public class parsingxls {
                        return i ;
                    }
                }
-           }
+
 
            }
 
@@ -96,22 +105,23 @@ public class parsingxls {
        return  -1;
    }
 
-
-    public Article getallrows(int idsheet,int idrow, String cellContent)
+    private String getDataFormattedfromcell(int idsheet,int idrow,int colomn)
     {
         final DataFormatter df = new DataFormatter();
+
+        return df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(colomn));
+    }
+
+    public Article getallrows(int idsheet, int idrow)
+    {
         Article article=new Article();
 
-        String value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(1)) +
-                df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(2));
-        article.setCASE(value);
 
-        value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(9));
-        article.setPart_Name(value);
 
-        value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7));
-        article.setPart_Num(value);
-
+        article.setCASE(getDataFormattedfromcell(idsheet,idrow,pCASE_COLOMN));
+        article.setPart_Name(getDataFormattedfromcell(idsheet,idrow,pPARTNAME_COLOMN));
+        article.setPart_Num(getDataFormattedfromcell(idsheet,idrow,pPARTNUMBER_COLOMN));
+        article.setBOX(getDataFormattedfromcell(idsheet, idrow, pBOX_COLOMN));
 
         Cell CC1=this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7);
 
@@ -120,22 +130,18 @@ public class parsingxls {
 
         while(!finish){
             stat=new Station();
-            value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(3));
-            article.getListe_BOX().add(value);
 
-            value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(12)) +" "+
-                    df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(13));
-            stat.setStat_Name(value);
 
-            value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(14));
-            stat.setQTY(value);
+            stat.setStat_Name(getDataFormattedfromcell(idsheet,idrow,pSTATION_NAME_COLOMN));
+            stat.setStat_Num(getDataFormattedfromcell(idsheet, idrow, pSTATION_NUMBER_COLOMN));
+            stat.setQTY(getDataFormattedfromcell(idsheet,idrow,pSTATION_QTY_COLOMN));
 
             article.getListe_Station().add(stat);
             idrow++;
 
-            value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7));
+            //value=df.formatCellValue(this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7));
 
-            if(!isMergedCell(idsheet,this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(7),CC1))
+            if(!isMergedCell(idsheet,this.myWorkBook.getSheetAt(idsheet).getRow(idrow).getCell(pPARTNUMBER_COLOMN),CC1))
             {
                 finish=true;
                 break;
